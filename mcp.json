@@ -1,0 +1,23 @@
+{
+	"servers": {
+		"books-server":{
+			"command": "/home/navin/Documents/dev/mcp/venv/bin/python3",
+			"args": ["/home/navin/Documents/dev/mcp/books.py"],
+			"sandbox": {
+				"allowed_folders": [],
+				"allowed_domains": [],
+				"sandboxEnabled": true
+			}
+		}
+		// "car-server":{
+		// 	"command": "/home/navin/Documents/dev/mcp/venv/bin/python3",
+		// 	"args": ["/home/navin/Documents/dev/mcp/car.py"],
+		// 	"sandbox": {
+		// 		"allowed_folders": [],
+		// 		"allowed_domains": [],
+		// 		"sandboxEnabled": true
+		// 	}
+		// }
+
+	}
+}
