@@ -26,12 +26,13 @@ def get_transaction(name: str):
 
 
 @mcp.tool()
-def update_transaction(name: str, function: str, amount: str):
+def update_transaction(name: str, function: str, amount: str, credit=True):
     # Update the transaction for the given name, function, amount, and transaction
     return {
         'name': name,
         'function': function,
         'amount': amount,
+        'credit': 'credit' if credit else 'withdraw'
     }
 
 @mcp.prompt()
