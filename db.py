@@ -26,11 +26,18 @@ class DynamoDB:
         table_instance.insert_one(doc)
         return 'Object is updated'
     
-    def get_object(self):
+    def get_object(self, name):
         db_instance = self.cluster[self.db]
         table_instance = db_instance[self.table]
-        objects = list(table_instance.find({}))
+        objects = list(table_instance.find({"name": {"$regex": name, "$options": "i"}}))
         return objects
+    
+    def get_object_by_name(self, name):
+        db_instance = self.cluster[self.db]
+        table_instance = db_instance[self.table]
+        objects = list(table_instance.find({"name": {"$regex": name, "$options": "i"}}))
+        unique_names = {each['name'] for each in objects}
+        return list(unique_names)
     
     def delete_object(self, id):
         db_instance = self.cluster[self.db]
@@ -39,6 +46,6 @@ class DynamoDB:
 
 if __name__ == '__main__':
     db = DynamoDB()
-    for each in db.get_object():
-        a = each['name']
+    for each in db.get_object('elfin nalini'):
+        a = each['amount']
         print(a)
