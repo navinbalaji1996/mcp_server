@@ -1,0 +1,3 @@
+To do:
+* Don't store the history of conversations
+* Ignore all other logs and just print the desired output

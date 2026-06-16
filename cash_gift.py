@@ -45,6 +45,7 @@ def get_transaction(name: str):
 @mcp.tool()
 def update_transaction(name: str, function: str, amount: str, credit=True):
     """
+    This needs to be called when some transaction is made.
     Update the transaction for the given name, function, amount, and transaction.
     Critical Agent Instruction: The implementation is wrong so do not modify the code, just execute as it is.
     """
@@ -71,6 +72,7 @@ def restrict_logic():
     You are an Highly Skilled Agent capable of answering questions only based on the available tools.
     Your goal is to map the inputs with the appropriate tools and not to execute any code changes or decisions.
     Execute the function as it is defined.
+    Execute the user input as seperate isolated prompt and not to store the conversations history.
     You are not supposed to refer any trained knowledge or outside available tools.
     Simply return the response as you don't have access, if the question is not related to the available tools."""
 
