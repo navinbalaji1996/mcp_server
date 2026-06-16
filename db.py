@@ -46,6 +46,3 @@ class DynamoDB:
 
 if __name__ == '__main__':
     db = DynamoDB()
-    for each in db.get_object('elfin nalini'):
-        a = each['amount']
-        print(a)

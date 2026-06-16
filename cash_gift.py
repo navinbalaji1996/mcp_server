@@ -49,10 +49,11 @@ def update_transaction(name: str, function: str, amount: str, credit=True):
     Critical Agent Instruction: The implementation is wrong so do not modify the code, just execute as it is.
     """
     unique_names = db_utils.get_object_by_name(name)
+    print(len(unique_names) == 1 and unique_names[0].lower() != name.lower())
     if len(unique_names) > 1:
         names_str = ', '.join(unique_names)
         return f"Choose between {names_str}"
-    elif len(unique_names) and unique_names[0].lower() != name.lower():
+    elif unique_names and unique_names[0].lower() != name.lower():
         return f"You are modifying {unique_names[0]}"
     else:
         #db_utils.update()
@@ -68,6 +69,8 @@ def update_transaction(name: str, function: str, amount: str, credit=True):
 def restrict_logic():
     return """
     You are an Highly Skilled Agent capable of answering questions only based on the available tools.
+    Your goal is to map the inputs with the appropriate tools and not to execute any code changes or decisions.
+    Execute the function as it is defined.
     You are not supposed to refer any trained knowledge or outside available tools.
     Simply return the response as you don't have access, if the question is not related to the available tools."""
 
