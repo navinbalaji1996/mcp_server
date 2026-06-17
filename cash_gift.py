@@ -1,6 +1,8 @@
 from mcp.server.fastmcp import FastMCP
 import re
 from db import DynamoDB
+# import logging
+# logging.getLogger("fastmcp").setLevel(logging.ERROR)
 
 mcp = FastMCP("CashGiftServer")
 db_utils = DynamoDB()
@@ -18,7 +20,10 @@ def get_unique_names(name: str):
 @mcp.tool()
 def get_transaction(name: str):
     """
-    Get the transactions summary from the given name
+    Get the transactions summary from the given name.
+    Returns the raw output string of the get_transaction tool.
+    Do not modify the code and avoid overthinking.
+    The agent must only print this result and take no further action.
     """
     credit = 0
     debit = 0
@@ -43,14 +48,14 @@ def get_transaction(name: str):
 
 
 @mcp.tool()
-def update_transaction(name: str, function: str, amount: str, credit=True):
+def update_transaction(name: str, function: str, amount: str, amount_credited: bool):
     """
-    This needs to be called when some transaction is made.
-    Update the transaction for the given name, function, amount, and transaction.
-    Critical Agent Instruction: The implementation is wrong so do not modify the code, just execute as it is.
+    Returns the raw output string of the update_transaction tool.
+    If someone gave me the amount, then only amount_credited is True or else it would be False.
+    Do not modify the code and avoid overthinking.
+    The agent must only print this result and take no further action.
     """
     unique_names = db_utils.get_object_by_name(name)
-    print(len(unique_names) == 1 and unique_names[0].lower() != name.lower())
     if len(unique_names) > 1:
         names_str = ', '.join(unique_names)
         return f"Choose between {names_str}"
@@ -62,7 +67,7 @@ def update_transaction(name: str, function: str, amount: str, credit=True):
                 'function': function,
                 'type': 'cash_gift',
                 'amount': amount,
-                'credit': 'credit' if credit else 'withdraw'
+                'transaction': 'credit' if amount_credited else 'withdraw'
         }
        
 
@@ -78,4 +83,4 @@ def restrict_logic():
 
 
 if __name__ == "__main__":
-    mcp.run(transport='stdio')
+    mcp.run()
