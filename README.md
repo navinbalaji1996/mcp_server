@@ -15,3 +15,7 @@
 * Search for add models at the bottom, add google provider and add apikey
 * You can able to select all github copilot models and gemini.
 * Use auto mode for auto selection of the best models based on the complexity.
+
+## How to have the customized agent mode
+* Create the new prompt called .prompt.md under .github/prompts
+* Sample: /strict-mcp query="Siva gave me 100 for his birthday"

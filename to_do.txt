@@ -1,5 +1,5 @@
 To do:
-* Convert k to 1000 in mongodb
-* Agent should not take control (somewhat working)
-* Ignore all other logs and just print the desired output
-* Don't store the history of conversations
+
+Secondary:
+* Add another field for object bypassing cash
+

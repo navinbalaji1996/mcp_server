@@ -19,10 +19,9 @@ class DynamoDB:
     def close_db(self):
         self.cluster.close()
 
-    def put_object(self, query, response):
+    def put_object(self, doc):
         db_instance = self.cluster[self.db]
         table_instance = db_instance[self.table]
-        doc = {'query': query, 'response': response}
         table_instance.insert_one(doc)
         return 'Object is updated'
     
