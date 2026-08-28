@@ -3,3 +3,27 @@ To do:
 Secondary:
 * Add another field for object bypassing cash
 
+from mcp.server.fastmcp import FastMCP
+from datetime import datetime
+from db import DynamoDB
+
+mcp = FastMCP("CashGiftServer")
+db_utils = DynamoDB()
+    
+@mcp.tool()
+def add_nums(a:int, b:int):
+    """
+    Add two numbers and send the result
+    """
+    return a + b
+
+@mcp.tool()
+def sub_nums(a:int, b:int):
+    """
+    Subtract the numbers and send the result
+    """
+    return a - b
+       
+
+if __name__ == "__main__":
+    mcp.run()

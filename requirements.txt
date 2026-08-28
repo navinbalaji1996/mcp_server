@@ -1,2 +1,4 @@
 fastmcp
 pymongo
+github-copilot-sdk
+google-genai
