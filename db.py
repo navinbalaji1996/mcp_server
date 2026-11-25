@@ -7,7 +7,7 @@ class DynamoDB:
 
     def __init__(self):
         self.db = 'search-engine-db'
-        self.table = 'search-engine-collection'
+        self.table = 'search_engine_collection'
         self.username = 'navinbalaji1996_db_user'
         self.password = 'XUuBLBEMjLCbZqHq'
         self.connect_db()

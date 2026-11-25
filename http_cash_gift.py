@@ -1,8 +1,8 @@
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 from datetime import datetime
 from db import DynamoDB
 
-mcp = FastMCP("CashGiftServer")
+mcp = MCPServer("CashGiftServer")
 db_utils = DynamoDB()
 
 

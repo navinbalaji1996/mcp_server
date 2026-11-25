@@ -1,8 +1,8 @@
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 from datetime import datetime
 from db import DynamoDB
 
-mcp = FastMCP("CashGiftServer")
+mcp = MCPServer("CashGiftServer")
 db_utils = DynamoDB()
 
 
@@ -25,6 +25,8 @@ def get_transaction(name: str):
     """
     credit = 0
     debit = 0
+    credit_str = ''
+    debit_str = ''
 
     unique_names = db_utils.get_object_by_name(name)
     if len(unique_names) == 0:
@@ -36,17 +38,30 @@ def get_transaction(name: str):
     objects = db_utils.get_object(name)
     for each in objects:
         if each['transaction'] == 'credit':
-            credit += int(each['amount'])
+            if each['gift'].isdigit():
+                credit += int(each['gift'])
+            else:
+                credit_str += each['gift'] + ', '
         else:
-            debit += int(each['amount'])
+            if each['gift'].isdigit():
+                debit += int(each['gift'])
+            else:
+                debit_str += each['gift'] + ', '
+    response = ''
     if credit > debit:
-        return f"You owe {name} {str(credit - debit)}"
-    else:
-        return f"{name} owe you {str(debit - credit)}"
+        response = f"You owe {name} {str(credit - debit)}"
+    elif debit > credit:
+        response = f"{name} owe you {str(debit - credit)}"
+    if credit_str:
+        response += '\n' + f"You owe {name} {credit_str[:-2]}"
+    if debit_str:
+        response += '\n' + f"{name} owe you {debit_str[:-2]}"
+    return response
+
 
 
 @mcp.tool()
-def update_transaction(name: str, function: str, amount: str, amount_credited: bool):
+def update_transaction(name: str, function: str, gift: str, amount_credited: bool):
     """
     Do not use conversation history to execute the query.
     If someone gave me the amount, then only amount_credited is True or else it would be False.
@@ -64,12 +79,12 @@ def update_transaction(name: str, function: str, amount: str, amount_credited: b
         doc = { 'name': name,
                 'function': function,
                 'type': 'cash_gift',
-                'amount': amount,
+                'gift': gift,
                 'transaction': 'credit' if amount_credited else 'withdraw',
                 'updated_time': str(datetime.now())
         }
         db_utils.put_object(doc)
-        return f"{amount} is marked as {doc['transaction']} for {name} from {function}"
+        return f"{gift} is marked as {doc['transaction']} for {name} from {function}"
        
 
 @mcp.prompt()
